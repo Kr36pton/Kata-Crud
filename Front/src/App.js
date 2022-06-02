@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useReducer } from 'react';
 
-function App() {
+import { TaskContext } from './context/taskContext';
+import { taskReducer } from './reducer/taskReducer';
+
+import { Main } from './components/Main';
+
+import './sass/styles.scss';
+
+export const App = () => {
+  const initialState = {
+    tasks: [],
+    loading: false,
+  };
+
+  const [state, dispatch] = useReducer(taskReducer, initialState);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TaskContext.Provider value={{ state, dispatch }}>
+      <Main />
+    </TaskContext.Provider>
   );
-}
-
-export default App;
+};
